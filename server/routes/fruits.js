@@ -1,6 +1,7 @@
 const express = require('express')
 // TODO: import checkJwt
 const db = require('../db/fruits')
+const checkJwt = require('../auth0')
 
 const router = express.Router()
 
@@ -20,7 +21,7 @@ router.get('/', async (req, res) => {
 
 // use checkJwt as middleware
 // POST /api/v1/fruits
-router.post('/', async (req, res) => {
+router.post('/', checkJwt, async (req, res) => {
   const { fruit } = req.body
   const auth0Id = req.user?.sub
   const newFruit = {
@@ -28,6 +29,8 @@ router.post('/', async (req, res) => {
     name: fruit.name,
     average_grams_each: fruit.averageGramsEach,
   }
+
+  console.log(fruit, auth0Id)
   try {
     const fruits = await db.addFruit(newFruit)
     res.json({ fruits })
@@ -39,7 +42,7 @@ router.post('/', async (req, res) => {
 
 // use checkJwt as middleware
 // PUT /api/v1/fruits
-router.put('/', async (req, res) => {
+router.put('/', checkJwt, async (req, res) => {
   const { fruit } = req.body
   const auth0Id = req.user?.sub
   const fruitToUpdate = {
@@ -64,7 +67,7 @@ router.put('/', async (req, res) => {
 
 // use checkJwt as middleware
 // DELETE /api/v1/fruits
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',checkJwt, async (req, res) => {
   const id = Number(req.params.id)
   const auth0Id = req.user?.sub
   try {

@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * all authorization operations
      */
     <Auth0Provider
-      domain={''}
-      clientId={''}
+      domain={'kotare-2022-ruiha.au.auth0.com'}
+      clientId={'8n0nBZDBSRbZZsBf00GGoxnfkXbXEzI5'}
       redirectUri={window.location.origin}
-      audience=""
+      audience="https://fruits/api"
     >
       <Provider store={store}>
         <App />

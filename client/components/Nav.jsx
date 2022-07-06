@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
 
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
 
@@ -14,19 +15,24 @@ const NavLink = styled(Link)`
 
 function Nav() {
   // TODO: call the useAuth0 hook and destructure logout and loginWithRedirect
+  const { logout, loginWithRedirect} = useAuth0()
   function handleLogoff(e) {
     e.preventDefault()
-    console.log('log off')
+   logout()
   }
 
   function handleRegister(e) {
     e.preventDefault()
-    console.log('register')
+    loginWithRedirect(
+      { 
+        redirectUri: `${window.location.origin}/register`
+    }
+    )
   }
 
   function handleSignIn(e) {
     e.preventDefault()
-    console.log('sign in')
+loginWithRedirect()
   }
   return (
     <>

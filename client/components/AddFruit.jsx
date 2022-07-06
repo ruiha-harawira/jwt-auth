@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { GridForm, ColOne, ColTwo, Button } from './Styled'
 
@@ -6,6 +7,7 @@ import { addFruit } from '../api'
 
 function AddFruit({ setFruits, closeAddForm, setError }) {
   // TODO: read from global state
+  const { token } = useSelector(state => state.loggedInUser)
   const [newFruit, setNewFruit] = useState(false)
 
   function handleAddChange(e) {
@@ -19,7 +21,7 @@ function AddFruit({ setFruits, closeAddForm, setError }) {
   function handleAdd() {
     const fruit = { ...newFruit }
     // TODO: pass token as second parameter
-    addFruit(fruit, 'token')
+    addFruit(fruit, token)
       .then(setFruits)
       .then(closeAddForm)
       .catch((err) => setError(err.message))
